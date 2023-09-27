@@ -9,5 +9,5 @@ sites/site*/public/theme/
 textpattern/
 HISTORY.txt
 README.txt
-secret/
+secret/*
 data/data.json
