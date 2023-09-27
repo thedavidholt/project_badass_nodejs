@@ -24,8 +24,10 @@ function Get-Data {
     if ($null -eq $DataFile.LastWriteTime) {
         $DataAge = 144
     } else {
-        $DataAge = $(Get-Date).Subtract($DataFile.LastWriteTime).Minutes
+        $DataAge = $(Get-Date).Subtract($DataFile.LastWriteTime).TotalMinutes
     }
+    
+    Write-Debug "DataAge (minutes): $DataAge"
     
     if ($DataAge -lt 144) {
         Write-Debug "Data is fresh, retrieving from file..."
