@@ -12,7 +12,7 @@ param(
     [Parameter()]
     [hashtable] $Owners = (Get-Content -Path ".\data\owners.json" | ConvertFrom-Json -AsHashtable)
 )
- 
+
 function Get-Data {
     param (
         [Parameter(Mandatory=$true)]
@@ -60,3 +60,6 @@ $Owner = @{label="owner";expression={$Owners[$_.teamAbv]}}
 $DataWeCareAbout = $Data.body | Select-Object teamID, teamAbv, teamCity, teamName, wins, tie, loss, $Points, $Owner 
 
 $DataWeCareAbout | Format-Table
+
+$totalPoints = @{label="TotalPoints";expression={[int]($_.Group | Measure-Object -Property points -Sum).Sum}}
+$DataWeCareAbout | Group-Object owner | Select-Object Name, $totalPoints | Sort-Object totalPoints -Descending | Format-Table
