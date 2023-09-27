@@ -55,3 +55,8 @@ function Get-Data {
 
 $Data = Get-Data $DataFilePath $ApiKey | ConvertFrom-Json
 
+$Points = @{label="points";expression={[int]$_.wins + ([int]$_.tie/2)}}
+$Owner = @{label="owner";expression={$Owners[$_.teamAbv]}}
+$DataWeCareAbout = $Data.body | Select-Object teamID, teamAbv, teamCity, teamName, wins, tie, loss, $Points, $Owner 
+
+$DataWeCareAbout | Format-Table
