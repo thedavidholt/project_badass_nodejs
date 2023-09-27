@@ -6,7 +6,11 @@ param(
 
     # Parameter help description
     [Parameter()]
-    [String] $ApiKey = (Get-Content -Path ".\secret\api_key.txt")
+    [String] $ApiKey = (Get-Content -Path ".\secret\api_key.txt"),
+
+    # Parameter help description
+    [Parameter()]
+    [hashtable] $Owners = (Get-Content -Path ".\data\owners.json" | ConvertFrom-Json -AsHashtable)
 )
  
 function Get-Data {
