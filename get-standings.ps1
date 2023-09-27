@@ -49,9 +49,5 @@ function Get-Data {
     return $JsonData
 }
 
-$Data = $(ConvertFrom-Json (Get-Data $DataFilePath $ApiKey))
+$Data = Get-Data $DataFilePath $ApiKey | ConvertFrom-Json
 
-# Write-Host $Data
-# $Data | Get-Member
-
-# $Data[0] | Format-Table
