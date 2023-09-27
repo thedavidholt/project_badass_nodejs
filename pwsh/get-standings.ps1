@@ -32,7 +32,6 @@ function Get-Data {
         $Data = $(Get-Content $DataFile)
     } else {
         Write-Debug "Fetching new data..."
-        # $ApiKey = Get-Content -Path "..\secret\api_key.txt"
         $headers=@{}
         $headers.Add("X-RapidAPI-Key", "$ApiKey")
         $headers.Add("X-RapidAPI-Host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
