@@ -8,7 +8,7 @@ A little sumpin' sumpin' to track our NFL league progress.
 
 ## the_secret_folder
 
-The .gitignore file is set to not commit anything inside the secret folder at the root of this repo. You can make a text file api_key.txt inside of the secret folder to store your super secret API key. This key is used to, well, access the API.
+The .gitignore file is set to not commit anything inside the secret folder at the root of this repo. You can make a text file `api_key.txt` inside of the secret folder to store your super secret API key. This key is used to, well, access the API.
 
 ## the_powershell
 
