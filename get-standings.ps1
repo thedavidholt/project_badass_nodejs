@@ -2,11 +2,11 @@
 param(
     # Parameter help description
     [Parameter(ValueFromPipeline=$true)]
-    [String] $DataFilePath = "..\data\data.json",
+    [String] $DataFilePath = ".\data\data.json",
 
     # Parameter help description
     [Parameter()]
-    [String] $ApiKey = (Get-Content -Path "..\secret\api_key.txt")
+    [String] $ApiKey = (Get-Content -Path ".\secret\api_key.txt")
 )
  
 function Get-Data {
@@ -30,7 +30,7 @@ function Get-Data {
     if ($DataAge -lt 144) {
         Write-Debug "Data is fresh, retrieving from file..."
 
-        $Data = $(Get-Content $DataFile)
+        $JsonData = $(Get-Content $DataFile)
     } else {
         Write-Debug "Data is stale, fetching from API..."
 
@@ -41,12 +41,15 @@ function Get-Data {
             -Uri 'https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com/getNFLTeams' `
             -Method GET `
             -Headers $headers
-        $Data = $response.Content | Tee-Object $DataFilePath
+        $JsonData = $response.Content | Tee-Object $DataFilePath
     }
 
-    return $Data
+    return $JsonData
 }
 
-$Data = Get-Data $DataFilePath $ApiKey
+$Data = $(ConvertFrom-Json (Get-Data $DataFilePath $ApiKey))
 
+# Write-Host $Data
+# $Data | Get-Member
 
+# $Data[0] | Format-Table
