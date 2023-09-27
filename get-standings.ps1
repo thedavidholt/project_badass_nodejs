@@ -1,3 +1,4 @@
+#Requires -Version 6.0
 [CmdletBinding()]
 param(
     # Parameter help description
