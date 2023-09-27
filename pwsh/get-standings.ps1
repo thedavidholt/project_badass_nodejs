@@ -29,9 +29,11 @@ function Get-Data {
     
     if ($DataAge -lt 144) {
         Write-Debug "Data is fresh, retrieving from file..."
+
         $Data = $(Get-Content $DataFile)
     } else {
-        Write-Debug "Fetching new data..."
+        Write-Debug "Data is stale, fetching from API..."
+
         $headers=@{}
         $headers.Add("X-RapidAPI-Key", "$ApiKey")
         $headers.Add("X-RapidAPI-Host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com")
