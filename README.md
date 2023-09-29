@@ -12,7 +12,7 @@ The .gitignore file is set to not commit anything inside the secret folder at th
 
 ## the_powershell
 
-To start off, @eboblick wrote a Powershell script to query the API and tally up the league's scores. @thedavidholt went crazy one night, stayed up wayyyy too late, injected the script with steroids, and then couldn't sleep.
+To start off, @eboblick wrote a Powershell script to query the API and tally up the league's scores. @thedavidholt went crazy one night, stayed up wayyyy too late, injected the script with steroids, and then couldn't sleep. The `get-standings.ps1` script requires a minimum of Powershell version 6 due to the importing of the owners.json file as a hashtable. If you need to update, you can find the latest version for Windows here: https://aka.ms/PSWindows. You may also find the Linux Powershell installation resources here: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux. If you're on Mac, you're on your own! Just kidding, there's probably something out there, I'm just too lazy to go look for it.
 
 ## the_future
 
