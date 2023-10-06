@@ -9,11 +9,15 @@
         <h2>Team Standings</h2>
         <% if (teams.length > 0) { %>
             <table>
-                <tr><th></th><th>Team Name</th><th>Wins</th><th>Tie</th><th>Loss</th><th>Points</th><th>Owner</th></tr>
+                <tr><th>Team Name</th><th>Wins</th><th>Tie</th><th>Loss</th><th>Points</th><th>Owner</th></tr>
                 <% teams.forEach(team => { %>
                     <tr>
-                        <td><img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 30px;"></td>
-                        <td><%= team.teamCity + " " + team.teamName %></td>
+                        <td>
+                            <a href="/team-standings/<%= team.teamAbv %>">
+                            <img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 30px;">
+                            <%= team.teamCity + " " + team.teamName %>
+                            </a>
+                        </td>
                         <td><%= team.wins %></td>
                         <td><%= team.tie %></td>
                         <td><%= team.loss %></td>
