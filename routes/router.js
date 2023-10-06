@@ -1,4 +1,5 @@
 const express = require('express')
+const errorController = require('../controllers/error-controller')
 const teamsController = require('../controllers/teams-controller')
 const router = express.Router()
 
@@ -14,8 +15,6 @@ router.get('/raw-data', (req, res) => {
     res.contentType('application/json').json(teams)
 })
 
-router.use((req, res) => {
-    res.status(404).render('404', { site_title: 'Project Badass', page_name: '404' })
-})
+router.use(errorController.error_index)
 
 module.exports = router
