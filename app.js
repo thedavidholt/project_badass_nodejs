@@ -33,7 +33,6 @@ app.get('/team-standings/:teamAbv', (req, res) => {
   const teamAbv = req.params.teamAbv
   const team = _.find(teams, {'teamAbv': teamAbv})
   res.render('team-details', {site_title: 'Project Badass', page_name:'Team Details', team})
-  console.log(team)
 })
 
 app.get('/raw-data', (req, res) => {
