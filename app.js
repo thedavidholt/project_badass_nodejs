@@ -36,6 +36,6 @@ app.use((req, res) => {
   res.status(404).render('404', {site_title: 'Project Badass', page_name: '404'})
 })
 
-app.listen(3000)
-
+app.listen(3000, () => {
 console.log('The server has started...')
+})
