@@ -1,7 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
 const _ = require('lodash')
-const jsonQuery = require('json-query')
 const fs = require('fs')
 
 let teams = JSON.parse(fs.readFileSync('./data/data.json', 'utf-8')).body
