@@ -1,6 +1,5 @@
 const _ = require('lodash')
 const teams = require('../models/teams-model')
-// team_index, team_details
 
 const team_index = (req, res) => {
     res.render('team-standings', { 
