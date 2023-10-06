@@ -1,0 +1,30 @@
+{
+  "name": "project_badass",
+  "version": "1.0.0",
+  "description": "A little sumpin' sumpin' to track our NFL league progress.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thedavidholt/project_badass.git"
+  },
+  "keywords": [
+    "nfl",
+    "boblick",
+    "league"
+  ],
+  "author": "David Holt & Eric Boblick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thedavidholt/project_badass/issues"
+  },
+  "homepage": "https://github.com/thedavidholt/project_badass#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0"
+  }
+}
