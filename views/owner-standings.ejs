@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <%- include('./partials/head.ejs') %>
+<body>
+    
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="data">
+        <h2><%= page_name %></h2>
+        <% if (owner_standings.length > 0) { %>
+            <table>
+                <tr><th>Owner</th><th>Total Points</th></tr>
+                <% owner_standings.forEach(owner => { %>
+                    <tr>
+                        <td>
+                            <!-- <a href="/owner-standings/<%= owner.owner %>"> -->
+                            <%= owner.owner %>
+                            </a>
+                        </td>
+                        <td><%= owner.totalPoints %></td>
+                    </tr>
+                    <% }) %>
+            </table>
+        <% } else { %>
+            <p>There is no owner data to display.</p>
+        <% } %>
+    </div>
+    
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

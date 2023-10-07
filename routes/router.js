@@ -1,6 +1,7 @@
 const express = require('express')
 const errorController = require('../controllers/error-controller')
 const teamsController = require('../controllers/teams-controller')
+const ownersController = require('../controllers/owners-controller')
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -10,6 +11,8 @@ router.get('/', (req, res) => {
 router.get('/team-standings', teamsController.team_index)
 
 router.get('/team-standings/:teamAbv', teamsController.team_details)
+
+router.get('/owner-standings', ownersController.owners_index)
 
 router.get('/raw-data', (req, res) => {
     res.contentType('application/json').json(teams)
