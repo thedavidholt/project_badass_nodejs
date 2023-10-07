@@ -12,6 +12,5 @@ const owner_standings = _ .chain(teams)
 .orderBy('totalPoints','desc')
 .value()
 
-console.log(owner_standings)
 
 module.exports = owner_standings

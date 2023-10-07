@@ -14,17 +14,21 @@
                     <tr>
                         <td>
                             <a href="/team-standings/<%= team.teamAbv %>">
-                            <img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 30px;">
-                            <%= team.teamCity + " " + team.teamName %>
+                                <img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 30px;">
+                                <%= team.teamCity + " " + team.teamName %>
                             </a>
                         </td>
                         <td><%= team.wins %></td>
                         <td><%= team.tie %></td>
                         <td><%= team.loss %></td>
                         <td><%= team.points %></td>
-                        <td><%= team.owner %></td>
+                        <td>
+                            <a href="/owner-standings/<%= team.owner %>">
+                                <%= team.owner %>
+                            </a>
+                        </td>
                     </tr>
-                    <% }) %>
+                <% }) %>
             </table>
         <% } else { %>
             <p>There is no team data to display.</p>

@@ -15,7 +15,11 @@
             <td><%= team.tie %></td>
             <td><%= team.loss %></td>
             <td><%= team.points %></td>
-            <td><%= team.owner %></td>
+            <td>
+                <a href="/owner-standings/<%= team.owner %>">
+                    <%= team.owner %>
+                </a>
+            </td>
         </tr>
 
     </table>

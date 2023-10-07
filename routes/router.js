@@ -14,6 +14,8 @@ router.get('/team-standings/:teamAbv', teamsController.team_details)
 
 router.get('/owner-standings', ownersController.owners_index)
 
+router.get('/owner-standings/:owner', ownersController.owners_details)
+
 router.get('/raw-data', (req, res) => {
     res.contentType('application/json').json(teams)
 })
