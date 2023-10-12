@@ -7,10 +7,10 @@
 
     <div class="data">
         <h2><%= page_name %></h2>
-        <% if (owner_standings.length > 0) { %>
+        <% if (ownerStandings.length > 0) { %>
             <table>
                 <tr><th>Owner</th><th>Total Points</th></tr>
-                <% owner_standings.forEach(owner => { %>
+                <% ownerStandings.forEach(owner => { %>
                     <tr>
                         <td>
                             <a href="/owner-standings/<%= owner.owner %>">

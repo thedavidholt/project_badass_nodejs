@@ -1,20 +1,32 @@
 const _ = require('lodash')
-const owner_standings = require('../models/owners-model')
+const data = require('../models/data')
 
+var ownerStandings = ''
+
+async function populateOwners() {
+    try {
+        var teams = await data.getData()
+    
+        ownerStandings = data.getOwnerStandings(teams)
+    } catch (error) {
+        console.error(`ERROR in populateOwners(): ${error}`)
+    }
+}
+populateOwners()
 
 
 const owners_index = (req, res) => {
     res.render('owner-standings', {
         site_title: 'Project Badass', 
         page_name: 'Owner Standings',
-        owner_standings
+        ownerStandings
     })
     
 }
 
 const owners_details = (req, res) => {
     const ownerName = req.params.owner
-    const owner = _.find(owner_standings, { 'owner': ownerName })
+    const owner = _.find(ownerStandings, { 'owner': ownerName })
     res.render('owner-details',{
         site_title: 'Project Badass', 
         page_name: 'Owner Details',

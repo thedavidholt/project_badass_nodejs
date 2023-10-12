@@ -1,5 +1,12 @@
 const _ = require('lodash')
-const teams = require('../models/teams-model')
+const data = require('../models/data')
+
+var teams = ''
+
+async function populateTeams() {
+    teams = await data.getData()
+}
+populateTeams()
 
 const team_index = (req, res) => {
     res.render('team-standings', { 
