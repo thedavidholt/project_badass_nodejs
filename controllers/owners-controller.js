@@ -6,7 +6,7 @@ var ownerStandings = ''
 async function populateOwners() {
     try {
         var teams = await data.getData()
-    
+        
         ownerStandings = await data.getOwnerStandings(teams)
     } catch (error) {
         console.error(`ERROR in populateOwners(): ${error}`)
@@ -27,6 +27,7 @@ const owners_index = (req, res) => {
 const owners_details = (req, res) => {
     const ownerName = req.params.owner
     const owner = _.find(ownerStandings, { 'owner': ownerName })
+
     res.render('owner-details',{
         site_title: 'Project Badass', 
         page_name: 'Owner Details',
