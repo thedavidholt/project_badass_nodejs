@@ -39,7 +39,6 @@ async function loadApiKey() {
     try {
         const api_key = await fs.promises.readFile('./secret/api_key.txt')
 
-        console.debug(`api_key: ${api_key}`)
         return api_key
     } catch (error) {
         console.error(`ERROR in loadApiKey(): ${error}`)
