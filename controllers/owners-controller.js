@@ -7,7 +7,7 @@ async function populateOwners() {
     try {
         var teams = await data.getData()
     
-        ownerStandings = data.getOwnerStandings(teams)
+        ownerStandings = await data.getOwnerStandings(teams)
     } catch (error) {
         console.error(`ERROR in populateOwners(): ${error}`)
     }

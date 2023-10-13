@@ -5,24 +5,28 @@
     
     <%- include('./partials/nav.ejs') %>
     
-    <img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 50px;">
-    <h2><%= team.teamCity + " " + team.teamName %> Details</h2>
+    <% if (typeof team !== 'undefined') { %>
+        <img src="<%- team.espnLogo1 %>" alt="<%= team.teamCity + " " + team.teamName %> ESPN Logo" style="width: 50px;">
+        <h2><%= team.teamCity + " " + team.teamName %> Details</h2>
 
-    <table>
-        <tr><th>Wins</th><th>Tie</th><th>Loss</th><th>Points</th><th>Owner</th></tr>
-        <tr>
-            <td><%= team.wins %></td>
-            <td><%= team.tie %></td>
-            <td><%= team.loss %></td>
-            <td><%= team.points %></td>
-            <td>
-                <a href="/owner-standings/<%= team.owner %>">
-                    <%= team.owner %>
-                </a>
-            </td>
-        </tr>
+        <table>
+            <tr><th>Wins</th><th>Tie</th><th>Loss</th><th>Points</th><th>Owner</th></tr>
+            <tr>
+                <td><%= team.wins %></td>
+                <td><%= team.tie %></td>
+                <td><%= team.loss %></td>
+                <td><%= team.points %></td>
+                <td>
+                    <a href="/owner-standings/<%= team.owner %>">
+                        <%= team.owner %>
+                    </a>
+                </td>
+            </tr>
 
-    </table>
+        </table>
+    <% } else { %>
+        <p>There is no team data to display.</p>
+    <% } %>
 
     <%- include('./partials/footer.ejs') %>
 </body>
