@@ -1,5 +1,6 @@
 secret/*
 data/data.json
+data/schedule.json
 
 # Logs
 logs
