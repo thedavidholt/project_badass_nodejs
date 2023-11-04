@@ -1,0 +1,4 @@
+# You can use a .dockerignore file to exclude files or directories from the build context.
+# For more information, see https://docs.docker.com/build/building/context/#dockerignore-files
+node_modules
+Dockerfile
