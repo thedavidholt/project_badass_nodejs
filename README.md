@@ -22,7 +22,7 @@ There are many ways to skin a cat. In this day and age, we have many different t
 
 To begin working with the Node version of the project, you will need to download and install Node.js. You can find the downloads at: https://nodejs.org/en/download, but your favorite package repository might have too. Once you have Node installed, you will need to clone this repo. Then from the project directory, run `npm install` to download the necessary Node packages for this app. You should then be able to run this app with `node app`, and once it's up and running, you can point your browser to http://localhost:3000.
 
-With Node, when you make changes to your source code, you will have to stop Node by pressing `ctrl + c` and start Node again. This can get a bit annoying rather quickly. Nodemon is a nice package that can watch your project and reload the site after its files have been modified. You can install Nodemon globally on your system with `npm install -g nodemon`. Then you can run the app with `nodemon app`, where you can sit back, relax, and watch as your worries of stopping and starting Node just to correct the little spelling mistake you made melt away.
+With Node, when you make changes to your source code, you will have to stop Node by pressing `ctrl + c` and start Node again. This can get a bit annoying rather quickly. Nodemon is a nice package that can watch your project and reload the site after its files have been modified. You can optionally run the app with `npx nodemon`, where you can sit back, relax, and watch as your worries of stopping and starting Node just to correct the little spelling mistake you made melt away.
 
 ### getting_started_with_docker
 
