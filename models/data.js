@@ -68,7 +68,7 @@ async function getDataAge() {
 async function getData() {
     const dataAgeMin = await getDataAge()
 
-    if (dataAgeMin >= 144) {
+    if (dataAgeMin >= 15) {
         console.log(`Data is ${dataAgeMin} minutes old. Call the API!`)
 
         const teams = await hitApi()
