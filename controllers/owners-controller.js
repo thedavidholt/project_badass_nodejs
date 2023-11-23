@@ -12,6 +12,10 @@ async function populateOwners() {
         console.error(`ERROR in populateOwners(): ${error}`)
     }
 }
+setInterval(() => {
+    console.log('Refreshing owner data...')
+    populateOwners()
+}, 900000);
 populateOwners()
 
 

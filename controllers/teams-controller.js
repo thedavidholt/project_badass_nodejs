@@ -6,6 +6,10 @@ var teams = ''
 async function populateTeams() {
     teams = await data.getData()
 }
+setInterval(() => {
+    console.log('Refreshing team data...')
+    populateTeams()
+}, 900000);
 populateTeams()
 
 const team_index = (req, res) => {
