@@ -9,7 +9,7 @@ async function populateTeams() {
 setInterval(() => {
     console.log('Refreshing team data...')
     populateTeams()
-}, 900000);
+}, 901000);
 populateTeams()
 
 const team_index = (req, res) => {
