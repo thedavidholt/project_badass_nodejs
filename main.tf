@@ -1,9 +1,13 @@
+variable "cf_api_token" {
+  sensitive = true
+  type = string
+  description = "A Cloudflare API token used for managing DNS."
+}
+
 terraform {
   cloud {
-    # The name of your Terraform Cloud organization.
     organization = "project_badass"
   
-    # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
         name = "project_badass_workspace"
     }
@@ -13,10 +17,13 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
   }
 }
 
-# Configure the AWS Provider
 provider "aws" {
   region = "us-west-2"
 }
@@ -39,6 +46,23 @@ resource "aws_lightsail_instance" "project_badass" {
   tags = {
     foo = "bar"
   }
+}
+
+provider "cloudflare" {
+  api_token = var.cf_api_token
+}
+
+data "cloudflare_zone" "boblick_net" {
+  name = "boblick.net"
+}
+
+resource "cloudflare_record" "nfl" {
+  zone_id = data.cloudflare_zone.boblick_net.id
+  name    = "nfl"
+  content   = aws_lightsail_static_ip.project_badass_static_ip.ip_address
+  type    = "A"
+  proxied = true
+  allow_overwrite = true
 }
 
 output "project_badass_public_ip" {
