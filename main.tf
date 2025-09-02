@@ -4,6 +4,10 @@ variable "cf_api_token" {
   description = "A Cloudflare API token used for managing DNS."
 }
 
+variable "admin_ssh_public_key" {
+  type = string
+}
+
 terraform {
   cloud {
     organization = "project_badass"
@@ -37,12 +41,18 @@ resource "aws_lightsail_static_ip" "project_badass_static_ip" {
   name = "project_badass_static_ip"
 }
 
+resource "aws_lightsail_key_pair" "admin" {
+  name       = "project_badass-admin"
+  public_key = var.admin_ssh_public_key
+}
+
 resource "aws_lightsail_instance" "project_badass" {
   name              = "project_badass"
   availability_zone = "us-west-2a"
   blueprint_id      = "nodejs"
   bundle_id         = "nano_3_0"
-  ip_address_type = "ipv4"
+  ip_address_type   = "ipv4"
+  key_pair_name     = aws_lightsail_key_pair.admin.name
   tags = {
     foo = "bar"
   }
@@ -65,6 +75,6 @@ resource "cloudflare_record" "nfl" {
   allow_overwrite = true
 }
 
-output "project_badass_public_ip" {
-  value = aws_lightsail_static_ip.project_badass_static_ip.ip_address
+output "ssh_access" {
+  value = "${aws_lightsail_instance.project_badass.username}@${aws_lightsail_static_ip.project_badass_static_ip.ip_address}"
 }
