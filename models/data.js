@@ -37,9 +37,9 @@ function writeJsonData(data) {
 
 async function loadApiKey() {
     try {
-        const api_key = await fs.promises.readFile('./secret/api_key.txt')
+        const api_key = await fs.promises.readFile('./secret/api_key.txt', { encoding: 'utf8' })
 
-        return api_key
+        return api_key.replace('\n','')
     } catch (error) {
         console.error(`ERROR in loadApiKey(): ${error}`)
     }
