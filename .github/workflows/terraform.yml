@@ -58,7 +58,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    environment: dev
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -101,7 +101,7 @@ jobs:
       env:
         TF_VAR_admin_ssh_public_key: ${{ steps.op-secrets.outputs.TF_VAR_admin_ssh_public_key }}
         TF_VAR_admin_cidrs:  ${{ steps.op-secrets.outputs.TF_VAR_admin_cidrs }}
-        TF_VAR_environment: "dev"
+        TF_VAR_environment: ${{ vars.ENVIRONMENT_NAME }}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
