@@ -10,7 +10,7 @@ variable "admin_ssh_public_key" {
 
 terraform {
   cloud {
-    organization = "project_badass"
+    organization = "holick_productions" 
   
     workspaces {
         name = "project_badass_workspace"
