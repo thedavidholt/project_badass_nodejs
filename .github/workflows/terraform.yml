@@ -78,6 +78,9 @@ jobs:
       env:
         OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
         TF_API_TOKEN: "op://Project_Badass/Terraform holick_productions API Credentials/credential"
+        TF_VAR_admin_ssh_public_key: "op://Project_Badass/Project Badass SSH Key/public key"
+        TF_VAR_admin_cidrs: "op://Project_Badass/Control Node CIDRS/URL"
+        TF_VAR_environment: "dev"
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
@@ -96,6 +99,10 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
+      env:
+        TF_VAR_admin_ssh_public_key: ${{ steps.op-secrets.outputs.TF_VAR_admin_ssh_public_key }}
+        TF_VAR_admin_cidrs:  ${{ steps.op-secrets.outputs.TF_VAR_admin_cidrs }}
+        TF_VAR_environment:  ${{ steps.op-secrets.outputs.TF_VAR_environment }}
 
       # On push to "main", build or change infrastructure according to Terraform configuration files
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
