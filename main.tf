@@ -7,6 +7,13 @@ variable "cf_api_token" {
 variable "admin_ssh_public_key" {
   type = string
 }
+locals {
+  domain_name = "boblick.net"
+  tags = {
+    "${var.project_name}" = ""
+    "env" = "${var.environment}"
+  }
+}
 
 terraform {
   cloud {
