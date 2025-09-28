@@ -1,0 +1,161 @@
+---
+
+- name: Configure Hosts
+  hosts: all
+  become: true
+  # gather_facts: true
+  # vars:
+  pre_tasks:
+
+    # - name: Configure Hostname
+    #   ansible.builtin.hostname:
+    #     name: '{{ inventory_hostname }}'
+    #     use: "debian"
+
+    # - name: Configure hosts File
+    #   ansible.builtin.template:
+    #     src: 'templates/hosts.j2'
+    #     dest: '/etc/hosts'
+    #     mode: "0644"
+    #     backup: true
+
+    # - name: Remove amazon-ssm-agent Snap
+    #   community.general.snap:
+    #     name: amazon-ssm-agent
+    #     state: absent
+
+    - name: Install Updates
+      tags: always
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: true
+
+    - name: Install PM2
+      community.general.npm:
+        name: pm2
+        global: true
+        state: latest
+
+- name: Deploy Application
+  hosts: all
+  become: true
+  tasks:
+    - name: Install needed apps
+      ansible.builtin.apt:
+        name:
+          - jq
+          - tmux
+        state: present
+
+    - name: Creates directory
+      ansible.builtin.file:
+        path: /opt/bitnami/projects/
+        state: directory
+        owner: bitnami
+        group: root
+        mode: '0775'
+
+    - name: Clone Repo
+      tags: always
+      ansible.builtin.git:
+        repo: https://github.com/thedavidholt/project_badass_nodejs.git
+        dest: /opt/bitnami/projects/project_badass
+        version: feature/2025-season
+        update: false
+        clone: true
+
+    - name: Creates directory
+      ansible.builtin.file:
+        path: /opt/bitnami/projects/project_badass/secret/
+        state: directory
+        owner: bitnami
+        group: root
+        mode: '0775'
+
+    - name: Install API Key
+      ansible.builtin.copy:
+        src: '../secret/api_key.txt'
+        dest: '/opt/bitnami/projects/project_badass/secret/api_key.txt'
+        owner: bitnami
+        group: root
+        mode: '0660'
+
+    - name: Initialize NPM Modules
+      community.general.npm:
+        ci: true
+        path: /opt/bitnami/projects/project_badass/
+        state: latest
+
+    - name: Get project_badass status
+      become: false
+      ansible.builtin.shell:
+        executable: /bin/bash
+        cmd: |
+          set -o pipefail
+          pm2 jlist | jq -rc 'map({pid, name, status:.pm2_env.status}) | map(select(.name == "project_badass") | select(.status == "online")) | .[0].status'
+      register: project_badass_status
+      changed_when: project_badass_status != 0
+
+    - name: Set project_badass_status fact
+      ansible.builtin.set_fact:
+        project_badass_status: "{{ project_badass_status.stdout }}"
+
+    - name: Debug project_badass_status
+      ansible.builtin.debug:
+        var: project_badass_status
+
+    - name: Start project_badass
+      become: false
+      ansible.builtin.command:
+        cmd: pm2 start app.js --name project_badass
+        chdir: '/opt/bitnami/projects/project_badass/'
+      register: start_project
+      changed_when: start_project.rc != 0
+      when: project_badass_status != "online"
+
+    - name: Wait for project_badass to be available
+      ansible.builtin.uri:
+        url: http://127.0.0.1:3000
+        status_code: 200
+      retries: 10
+      delay: 10
+
+    - name: Daemonize project_badass
+      ansible.builtin.command:
+        cmd: env PATH=$PATH:/opt/bitnami/node/bin /opt/bitnami/node/lib/node_modules/pm2/bin/pm2 startup systemd -u bitnami --hp /home/bitnami
+      register: daemonize
+      changed_when: daemonize.rc != 0
+
+    - name: Save pm2 app list
+      become: false
+      ansible.builtin.command:
+        cmd: pm2 save
+        chdir: '/opt/bitnami/projects/project_badass/'
+      register: save_app_list
+      changed_when: save_app_list.rc != 0
+
+    - name: Enable http
+      ansible.builtin.copy:
+        remote_src: true
+        src: /opt/bitnami/apache/conf/vhosts/sample-vhost.conf.disabled
+        dest: /opt/bitnami/apache/conf/vhosts/sample-vhost.conf
+        mode: preserve
+      notify: Restart Apache
+
+    - name: Enable https
+      ansible.builtin.copy:
+        remote_src: true
+        src: /opt/bitnami/apache/conf/vhosts/sample-https-vhost.conf.disabled
+        dest: /opt/bitnami/apache/conf/vhosts/sample-https-vhost.conf
+        mode: preserve
+      notify: Restart Apache
+
+  handlers:
+
+    - name: Restart Apache
+      ansible.builtin.command:
+        cmd: /opt/bitnami/ctlscript.sh restart apache
+      register: apache_restart
+      changed_when: apache_restart.rc != 0
+
+#reboot?
