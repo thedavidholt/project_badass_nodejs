@@ -45,6 +45,8 @@
 name: 'Terraform'
 
 on:
+  workflow_dispatch:
+    
   push:
     branches: [ "feature/2025-season" ]
   pull_request:
